@@ -1,0 +1,65 @@
+:root {
+  /* Core Brand Colors */
+  --color-amber: #F59E0B;
+  --color-amber-hover: #D97706;
+  --color-amber-muted: rgba(245, 158, 11, 0.12);
+  --color-amber-border: rgba(245, 158, 11, 0.28);
+
+  /* Deep Charcoal Surfaces */
+  --bg-app: #101114;
+  --bg-sidebar: #141519;
+  --bg-surface: #181A20;
+  --bg-surface-elevated: #1F222B;
+  --bg-surface-interactive: #262934;
+  --bg-modal: #1C1E26;
+  --bg-input: #14161C;
+
+  /* Text & Typography */
+  --text-primary: #FFFFFF;
+  --text-secondary: #D1D5DB;
+  --text-muted: #9CA3AF;
+  --text-dim: #6B7280;
+
+  /* Borders & Dividers */
+  --border-subtle: #242731;
+  --border-strong: #323644;
+  --border-focus: #F59E0B;
+
+  /* Semantic Status Colors (Subtle backgrounds with distinct readable text) */
+  --status-success-bg: rgba(16, 185, 129, 0.14);
+  --status-success-text: #34D399;
+  --status-success-border: rgba(16, 185, 129, 0.3);
+
+  --status-warning-bg: rgba(245, 158, 11, 0.14);
+  --status-warning-text: #FBBF24;
+  --status-warning-border: rgba(245, 158, 11, 0.3);
+
+  --status-error-bg: rgba(239, 68, 68, 0.14);
+  --status-error-text: #F87171;
+  --status-error-border: rgba(239, 68, 68, 0.3);
+
+  --status-info-bg: rgba(59, 130, 246, 0.14);
+  --status-info-text: #60A5FA;
+  --status-info-border: rgba(59, 130, 246, 0.3);
+
+  --status-neutral-bg: rgba(107, 114, 128, 0.16);
+  --status-neutral-text: #9CA3AF;
+  --status-neutral-border: rgba(107, 114, 128, 0.3);
+
+  --status-purple-bg: rgba(168, 85, 247, 0.14);
+  --status-purple-text: #C084FC;
+  --status-purple-border: rgba(168, 85, 247, 0.3);
+
+  /* Typography */
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Layout Constants */
+  --sidebar-width: 260px;
+  --header-height: 64px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
