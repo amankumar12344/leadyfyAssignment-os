@@ -31,13 +31,14 @@ async function createVideo(data, actorId = null) {
     status = 'SCRIPT_APPROVED'
   } = data;
 
-  if (!client_id) throw new Error('client_id is required.');
   if (!order_id) throw new Error('order_id is required.');
   if (!title || !title.trim()) throw new Error('Video title is required.');
 
   // Validate order
-  const order = await db.get("SELECT id, video_count, completed_videos_count FROM orders WHERE id = ?", [order_id]);
+  const order = await db.get("SELECT id, client_id, video_count, completed_videos_count FROM orders WHERE id = ?", [order_id]);
   if (!order) throw new Error(`Order ${order_id} does not exist.`);
+
+  const resolvedClientId = client_id ? parseInt(client_id, 10) : order.client_id;
 
   const res = await db.run(`
     INSERT INTO videos (
@@ -48,7 +49,7 @@ async function createVideo(data, actorId = null) {
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
   `, [
-    client_id,
+    resolvedClientId,
     order_id,
     script_id,
     creator_id,

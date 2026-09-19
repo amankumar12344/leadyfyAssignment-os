@@ -55,4 +55,16 @@ router.put('/:id', requireRole(['OWNER', 'ADMIN', 'EMPLOYEE']), async (req, res)
   }
 });
 
+router.put('/:id/checklist', requireRole(['OWNER', 'ADMIN', 'EMPLOYEE']), async (req, res) => {
+  try {
+    const shootId = parseInt(req.params.id, 10);
+    const updated = await shootService.updateShoot(shootId, {
+      pre_shoot_checklist: req.body
+    }, req.user.id);
+    return res.json({ success: true, shoot: updated });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;

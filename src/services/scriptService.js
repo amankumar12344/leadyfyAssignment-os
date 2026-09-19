@@ -27,14 +27,15 @@ async function createScript(data, actorId = null) {
     client_comments = null
   } = data;
 
-  if (!client_id) throw new Error('client_id is required.');
   if (!order_id) throw new Error('order_id is required.');
   if (!title) throw new Error('Script title is required.');
 
   // Verify order exists
   const order = await db.get("SELECT id, client_id FROM orders WHERE id = ?", [order_id]);
   if (!order) throw new Error(`Order ${order_id} does not exist.`);
-  if (order.client_id !== parseInt(client_id, 10)) {
+
+  const resolvedClientId = client_id ? parseInt(client_id, 10) : order.client_id;
+  if (client_id && order.client_id !== resolvedClientId) {
     throw new Error('Order does not belong to specified client.');
   }
 
@@ -48,7 +49,7 @@ async function createScript(data, actorId = null) {
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?)
   `, [
-    client_id,
+    resolvedClientId,
     order_id,
     video_number,
     title,

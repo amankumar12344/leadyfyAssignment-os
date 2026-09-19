@@ -342,8 +342,10 @@ async function getFinancialSummary() {
     invoiced: totalInvoiced,
     expenses: totalExpenses,
     creatorPayouts: totalPayoutsPaid,
+    creator_payouts: totalPayoutsPaid,
     pendingPayouts,
-    netProfit: Math.round(netProfit * 100) / 100
+    netProfit: Math.round(netProfit * 100) / 100,
+    net_profit: Math.round(netProfit * 100) / 100
   };
 }
 

@@ -3,10 +3,10 @@ const { logAudit } = require('./auditService');
 const { sendNotification } = require('./notificationService');
 
 async function createOrder(data, actorId = null) {
+  const video_count = data.video_count || data.contracted_video_count;
   const {
     client_id,
     package_name,
-    video_count,
     pricing,
     gst_rate = 18.0,
     start_date,

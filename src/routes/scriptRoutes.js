@@ -59,7 +59,11 @@ router.put('/:id', requireRole(['OWNER', 'ADMIN', 'EMPLOYEE']), async (req, res)
 router.post('/:id/approve', async (req, res) => {
   try {
     const scriptId = parseInt(req.params.id, 10);
-    const clientId = req.user.role === 'CLIENT' ? req.user.clientId : req.body.client_id;
+    let clientId = req.user.role === 'CLIENT' ? req.user.clientId : req.body.client_id;
+    if (!clientId) {
+      const existing = await scriptService.getScriptById(scriptId);
+      if (existing) clientId = existing.client_id;
+    }
     if (!clientId) {
       return res.status(400).json({ success: false, error: 'Client identification required.' });
     }
@@ -75,7 +79,11 @@ router.post('/:id/approve', async (req, res) => {
 router.post('/:id/revision', async (req, res) => {
   try {
     const scriptId = parseInt(req.params.id, 10);
-    const clientId = req.user.role === 'CLIENT' ? req.user.clientId : req.body.client_id;
+    let clientId = req.user.role === 'CLIENT' ? req.user.clientId : req.body.client_id;
+    if (!clientId) {
+      const existing = await scriptService.getScriptById(scriptId);
+      if (existing) clientId = existing.client_id;
+    }
     if (!clientId) {
       return res.status(400).json({ success: false, error: 'Client identification required.' });
     }

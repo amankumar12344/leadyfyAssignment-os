@@ -30,14 +30,19 @@ async function scheduleShoot(data, actorId = null) {
     post_shoot_checklist = null
   } = data;
 
-  if (!client_id) throw new Error('client_id is required.');
   if (!order_id) throw new Error('order_id is required.');
-  if (!shoot_date || !shoot_time) throw new Error('shoot_date and shoot_time are required.');
+  const order = await db.get("SELECT id, client_id FROM orders WHERE id = ?", [order_id]);
+  if (!order) throw new Error(`Order ${order_id} does not exist.`);
+
+  const resolvedClientId = client_id ? parseInt(client_id, 10) : order.client_id;
+  const resolvedShootTime = shoot_time || data.start_time || '10:00:00';
+
+  if (!shoot_date || !resolvedShootTime) throw new Error('shoot_date and shoot_time are required.');
   if (!location) throw new Error('location is required.');
   if (!creator_id) throw new Error('creator_id is required.');
 
   // PREVENT DOUBLE BOOKING: Check if creator is already booked on this shoot date
-  const conflicts = await checkDoubleBooking(creator_id, shoot_date, shoot_time);
+  const conflicts = await checkDoubleBooking(creator_id, shoot_date, resolvedShootTime);
   if (conflicts.length > 0) {
     const conflict = conflicts[0];
     throw new Error(
@@ -67,10 +72,10 @@ async function scheduleShoot(data, actorId = null) {
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `, [
-    client_id,
+    resolvedClientId,
     order_id,
     shoot_date,
-    shoot_time,
+    resolvedShootTime,
     location,
     creator_id,
     cameraman,
